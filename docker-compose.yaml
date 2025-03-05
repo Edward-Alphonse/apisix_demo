@@ -1,0 +1,64 @@
+version: "3.7"
+
+services:
+  apisix-dashboard:
+    image: apache/apisix-dashboard:3.0.1-alpine
+    restart: always
+    volumes:
+      - ./config/apisix_dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    depends_on:
+      - etcd
+    ports:
+      - "9000:9000/tcp"
+    networks:
+      apisix:
+
+  apisix:
+    image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
+    restart: always
+    volumes:
+      - ./config/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    ports:
+      - "9180:9180/tcp"
+      - "9080:9080/tcp"
+      - "9443:9443/tcp"
+      - "9091:9091/tcp"
+      - "9092:9092/tcp"
+    networks:
+      apisix:
+  etcd:
+    image: bitnami/etcd:3.5.11
+    restart: always
+    volumes:
+      - etcd_data:/bitnami/etcd
+    environment:
+      # 时区设置
+      TZ: "Asia/Shanghai"
+      ETCD_ENABLE_V2: "true"
+      # 允许无认证访问
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      # etcd 客户端访问URL
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"
+    networks:
+      apisix:
+
+networks:
+  apisix:
+    driver: bridge
+
+volumes:
+  etcd_data: #数据默认保留在 /var/lib/docker/volumes/etcd_data/_data 中
+    driver: local
+
+#volumes:
+#  etcd_data:
+#    driver: local
+#    driver_opts:
+#      type: "none"
+#      o: "bind"
+#      device: "./data/etcd" #指定数据保留在 ./data/etcd 中
