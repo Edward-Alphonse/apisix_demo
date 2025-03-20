@@ -10,6 +10,7 @@ import (
 func Init[P any](path string) *P {
 	v := viper.New()
 	v.SetConfigFile(path)
+	fmt.Println("---------------path", path)
 	// 查找并读取配置文件
 	if err := v.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {

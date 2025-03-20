@@ -1,0 +1,7 @@
+logs:
+  Path: "./logs/runner.log"
+  MaxSize: 10
+  MaxBackups: 21
+  MaxAge: 7
+  Compress: false
+  Level: "info"
