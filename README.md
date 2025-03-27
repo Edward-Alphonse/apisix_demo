@@ -6,3 +6,6 @@
 APISIX_LISTEN_ADDRESS=unix:/tmp/runner.sock
 APISIX_CONF_EXPIRE_TIME=3600
 ```
+
+#### 开发环境
+通过启动 docker-compose.yaml 作为本地的开发环境

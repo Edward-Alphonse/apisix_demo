@@ -45,10 +45,4 @@ func main() {
 	runnerCfg.LogLevel = writers.GetZapCoreLevel(cfg.Logs.Level)
 	runnerCfg.LogOutput = writers.GetFileWriterSyncer(cfg.Logs)
 	runner.Run(runnerCfg)
-
-	//root := NewCommand()
-	//if err := root.Execute(); err != nil {
-	//	fmt.Fprintln(os.Stderr, err.Error())
-	//	os.Exit(1)
-	//}
 }

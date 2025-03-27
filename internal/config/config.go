@@ -3,7 +3,7 @@ package config
 import (
 	logora "github.com/Edward-Alphonse/logora/writers"
 
-	"apisix_demo/pkg/config"
+	"github.com/Edward-Alphonse/pkg/config"
 )
 
 type Configuration struct {
