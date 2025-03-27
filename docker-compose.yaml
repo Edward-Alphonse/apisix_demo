@@ -18,7 +18,7 @@ services:
     restart: always
     volumes:
       - ./config/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-      - ./output:/usr/local/apisix/my_plugin/bamboo_gate         #编译产物地址映射
+      - ./output:/usr/local/apisix/my_plugin/bamboo         #编译产物地址映射
     depends_on:
       - etcd
     ports:

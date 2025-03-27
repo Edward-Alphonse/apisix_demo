@@ -28,5 +28,5 @@ deployment:
     timeout: 30                     # 30 seconds
 
 ext-plugin:
-  cmd: ["/usr/local/apisix/my_plugin/bamboo_gate/main", "-config", "/usr/local/apisix/my_plugin/bamboo_gate/config/config.yaml"]
+  cmd: ["/usr/local/apisix/my_plugin/bamboo/main", "-config", "/usr/local/apisix/my_plugin/bamboo/config/config.yaml"]
 

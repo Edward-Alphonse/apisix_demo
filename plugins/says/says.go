@@ -21,6 +21,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/Edward-Alphonse/logora"
 	pkgHTTP "github.com/apache/apisix-go-plugin-runner/pkg/http"
 	"github.com/apache/apisix-go-plugin-runner/pkg/log"
 	"github.com/apache/apisix-go-plugin-runner/pkg/plugin"
@@ -50,6 +51,10 @@ func (p *Say) Name() string {
 }
 
 func (p *Say) ParseConf(in []byte) (interface{}, error) {
+	// 在 apisix-dashboard上配置的 value进行解析
+	logora.Info("says parse conf", logora.Field{
+		"in": string(in),
+	})
 	conf := SayConf{}
 	err := json.Unmarshal(in, &conf)
 	return conf, err
@@ -57,13 +62,12 @@ func (p *Say) ParseConf(in []byte) (interface{}, error) {
 
 func (p *Say) RequestFilter(conf interface{}, w http.ResponseWriter, r pkgHTTP.Request) {
 	body := conf.(SayConf).Body
+	logora.Info("says request filter", logora.Field{
+		"body": body,
+	})
 	if len(body) == 0 {
 		return
 	}
 
 	w.Header().Add("X-Resp-A6-Runner", "Go")
-	_, err := w.Write([]byte(body))
-	if err != nil {
-		log.Errorf("failed to write: %s", err)
-	}
 }
